@@ -4,6 +4,7 @@ Project
 ## Team Blur
 
 ## Names:
+
 Zion Welsh,
 Trevor Levy,
 Perry Johnson,
