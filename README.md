@@ -87,3 +87,8 @@ Instructor assigns scenario
 
 ## Project Management
 
+Trello:
+https://trello.com/invite/b/6a95be6ca95b1e1943c04e4a/ATTI0d26a8b2d8340c311c854349c1f2e9f611DF734E/4901-capstone-sprint-0
+
+Figma:
+https://www.figma.com/make/n3W6NV8mwUJF5140j953I6/Design-UI-Front-End?fullscreen=1&t=sPnr1qWxoQIlGykE-1&code-node-id=0-6
