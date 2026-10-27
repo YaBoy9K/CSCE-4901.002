@@ -1,0 +1,7 @@
+FROM alpine:latest
+
+RUN apk add --no-cache \
+    iproute2 \
+    iptables
+
+CMD ["sleep", "infinity"]

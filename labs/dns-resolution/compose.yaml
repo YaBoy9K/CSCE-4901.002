@@ -1,0 +1,70 @@
+services:
+
+  router:
+    build: ./router
+    container_name: dne-router
+    privileged: true
+    command: >
+      sh -c "
+      sysctl -w net.ipv4.ip_forward=1 &&
+      iptables -A FORWARD -s 10.10.1.0/24 -d 10.10.2.0/24 -j ACCEPT &&
+      iptables -A FORWARD -s 10.10.2.0/24 -d 10.10.1.0/24 -m state --state ESTABLISHED,RELATED -j ACCEPT &&
+      iptables -t nat -A POSTROUTING -s 10.10.1.0/24 -d 10.10.2.0/24 -j MASQUERADE &&
+      sleep infinity
+      "
+    networks:
+      client_net:
+        ipv4_address: 10.10.1.254
+      server_net:
+        ipv4_address: 10.10.2.254
+
+  client:
+    build: ./client
+    container_name: dne-client
+    privileged: true
+    command: >
+      sh -c "
+      ssh-keygen -A &&
+      /usr/sbin/sshd &&
+      ip route replace default via 10.10.1.254 &&
+      sleep infinity
+      "
+    ports:
+      - "22001:22"
+    volumes:
+      - ./client/resolv.conf:/etc/resolv.conf
+    networks:
+      client_net:
+        ipv4_address: 10.10.1.10
+
+  dns:
+    build: ./dns
+    container_name: dne-dns
+    volumes:
+      - ./dns/named.conf:/etc/bind/named.conf:ro
+      - ./dns/db.dne.local:/etc/bind/db.dne.local:ro
+    networks:
+      server_net:
+        ipv4_address: 10.10.2.53
+
+  web:
+    image: nginx:alpine
+    container_name: dne-web
+    networks:
+      server_net:
+        ipv4_address: 10.10.2.80
+
+
+networks:
+
+  client_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.1.0/24
+
+  server_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.2.0/24
