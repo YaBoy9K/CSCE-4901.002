@@ -1,0 +1,14 @@
+$TTL 86400
+
+@   IN  SOA dns.dne.local. admin.dne.local. (
+        2026102701
+        3600
+        1800
+        604800
+        86400
+)
+
+@       IN  NS  dns.dne.local.
+
+dns     IN  A   10.10.2.53
+web     IN  A   10.10.2.80
