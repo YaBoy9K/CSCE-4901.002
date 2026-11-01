@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="DiagNet instructor dashboard" />
+    <title>DiagNet | Instructor Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <a class="brand" href="./index.html" aria-label="DiagNet home">
+          <span class="brand-mark" aria-hidden="true">D</span>
+          <span>DiagNet</span>
+        </a>
+
+        <div class="sidebar-section">
+          <p class="sidebar-label">Workspace</p>
+          <nav class="nav-list">
+            <a class="nav-item active" href="#dashboard" aria-current="page">
+              <span class="nav-icon" aria-hidden="true">▦</span>
+              Dashboard
+            </a>
+            <a class="nav-item" href="#scenarios">
+              <span class="nav-icon" aria-hidden="true">◇</span>
+              Scenario library
+            </a>
+            <a class="nav-item" href="#assignments">
+              <span class="nav-icon" aria-hidden="true">□</span>
+              Assignments
+            </a>
+            <a class="nav-item" href="#students">
+              <span class="nav-icon" aria-hidden="true">♙</span>
+              Students
+            </a>
+          </nav>
+        </div>
+
+        <div class="sidebar-section sidebar-bottom">
+          <p class="sidebar-label">Support</p>
+          <nav class="nav-list">
+            <a class="nav-item" href="#settings">
+              <span class="nav-icon" aria-hidden="true">⚙</span>
+              Settings
+            </a>
+            <a class="nav-item" href="#help">
+              <span class="nav-icon" aria-hidden="true">?</span>
+              Help center
+            </a>
+          </nav>
+          <div class="profile">
+            <span class="avatar avatar-purple" aria-hidden="true">TL</span>
+            <span class="profile-copy">
+              <strong>Trevor Levy</strong>
+              <small>Instructor</small>
+            </span>
+            <button class="icon-button" type="button" aria-label="Open account menu">•••</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="dashboard">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Instructor workspace</p>
+            <h1>Dashboard</h1>
+          </div>
+          <div class="topbar-actions">
+            <button class="icon-button notification-button" type="button" aria-label="Notifications">
+              <span aria-hidden="true">♢</span>
+              <span class="notification-dot" aria-hidden="true"></span>
+            </button>
+            <button class="button button-primary" type="button" id="create-scenario-button">
+              <span aria-hidden="true">+</span>
+              Create scenario
+            </button>
+          </div>
+        </header>
+
+        <div class="content">
+          <section class="welcome-row">
+            <div>
+              <p class="eyebrow">Sunday, November 1, 2026</p>
+              <h2>Good afternoon, Trevor</h2>
+              <p class="muted">Here is what is happening across your active labs.</p>
+            </div>
+            <div class="data-status" id="data-status" role="status">
+              <span class="status-dot status-dot-warning" aria-hidden="true"></span>
+              Loading dashboard data
+            </div>
+          </section>
+
+          <section class="metric-grid" aria-label="Dashboard summary">
+            <article class="metric-card">
+              <div class="metric-heading">
+                <span>Active labs</span>
+                <span class="metric-icon metric-icon-blue" aria-hidden="true">◉</span>
+              </div>
+              <strong class="metric-value" id="active-labs">--</strong>
+              <p class="metric-trend" id="active-labs-trend">Loading...</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-heading">
+                <span>Students in progress</span>
+                <span class="metric-icon metric-icon-purple" aria-hidden="true">♙</span>
+              </div>
+              <strong class="metric-value" id="students-in-progress">--</strong>
+              <p class="metric-trend" id="students-in-progress-trend">Loading...</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-heading">
+                <span>Completed this week</span>
+                <span class="metric-icon metric-icon-green" aria-hidden="true">✓</span>
+              </div>
+              <strong class="metric-value" id="completed-this-week">--</strong>
+              <p class="metric-trend" id="completed-this-week-trend">Loading...</p>
+            </article>
+            <article class="metric-card">
+              <div class="metric-heading">
+                <span>Needs attention</span>
+                <span class="metric-icon metric-icon-orange" aria-hidden="true">!</span>
+              </div>
+              <strong class="metric-value" id="needs-attention">--</strong>
+              <p class="metric-trend" id="needs-attention-trend">Loading...</p>
+            </article>
+          </section>
+
+          <section class="dashboard-grid">
+            <article class="panel attempts-panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Active student attempts</h3>
+                  <p class="muted">Monitor live lab activity and open a progress timeline.</p>
+                </div>
+                <label class="select-wrap">
+                  <span class="sr-only">Filter attempts by status</span>
+                  <select id="attempt-filter">
+                    <option value="all">All statuses</option>
+                    <option value="in-progress">In progress</option>
+                    <option value="needs-attention">Needs attention</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                </label>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Student</th>
+                      <th scope="col">Scenario</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Progress</th>
+                      <th scope="col">Last activity</th>
+                      <th scope="col"><span class="sr-only">View</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="attempts-table">
+                    <tr>
+                      <td class="table-empty" colspan="6">Loading attempts...</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <aside class="panel progress-panel" aria-live="polite">
+              <div class="panel-header progress-header">
+                <div>
+                  <p class="eyebrow">Selected attempt</p>
+                  <h3 id="progress-student">Select a student</h3>
+                </div>
+                <button class="icon-button" id="close-progress" type="button" aria-label="Clear selected attempt">×</button>
+              </div>
+              <div id="progress-content" class="progress-content empty-state">
+                <span class="empty-state-icon" aria-hidden="true">◌</span>
+                <p>Select an active attempt to see structured troubleshooting events.</p>
+              </div>
+            </aside>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

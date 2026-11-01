@@ -98,6 +98,20 @@ Current Sprint 2 Progress
 - Backend/API in development
 - Scenario Manager integration planned next
 
+## Frontend Prototype
+
+The initial instructor dashboard and student progress view are in
+`frontend/`. The page is dependency-free and can be previewed locally with:
+
+```bash
+python -m http.server 8000 --directory frontend
+```
+
+The dashboard requests live data from `GET /api/instructor/dashboard`. When
+that endpoint is not available, it clearly labels the page as demo data so the
+UI remains available while backend integration is in progress. The expected
+response shape is documented in `docs/backend-data-plan.md`.
+
 ## Project Management
 
 Trello:
