@@ -85,6 +85,19 @@ Instructor assigns scenario
 - Implement reset and validation
 - Test the complete DNS scenario
 
+Current Sprint 2 Progress
+
+- Ubuntu/Docker development environment configured
+- DNS troubleshooting lab implemented
+- Student SSH access implemented
+- DNS fault injection implemented
+- Repair reset implemented
+- Automated DNS validation implemented
+- Student frontend in development
+- Instructor frontend in development
+- Backend/API in development
+- Scenario Manager integration planned next
+
 ## Project Management
 
 Trello:
