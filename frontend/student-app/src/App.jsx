@@ -41,9 +41,74 @@ function Dashboard({ onOpenLab }) {
   )
 }
 
+function Lab({ onBack }) {
+  const [rootCause, setRootCause] = useState('')
+  const [fix, setFix] = useState('')
+  const [message, setMessage] = useState('Not submitted')
+
+  function copySSH() {
+    navigator.clipboard?.writeText(assignment.ssh)
+    setMessage('SSH command copied')
+  }
+
+  function submit() {
+    if (!rootCause.trim() || !fix.trim()) {
+      setMessage('Enter both the root cause and fix before submitting.')
+      return
+    }
+    setMessage('Prototype submission saved locally. Automated validation will be connected later.')
+  }
+
+  return (
+    <main className="page">
+      <button className="ghost" onClick={onBack}>← Dashboard</button>
+      <section className="hero compact">
+        <p className="eyebrow">Active Lab</p>
+        <h1>{assignment.title}</h1>
+      </section>
+
+      <div className="two-col">
+        <section className="card">
+          <h2>Problem Ticket</h2>
+          <p>{assignment.problem}</p>
+
+          <h3>SSH Access</h3>
+          <div className="command">{assignment.ssh}</div>
+          <button onClick={copySSH}>Copy SSH Command</button>
+
+          <h3>Student Instructions</h3>
+          <ol>
+            <li>Open your own terminal.</li>
+            <li>Connect using the SSH command above.</li>
+            <li>Troubleshoot the problem without suggested commands from DNE.</li>
+            <li>Return here and describe the root cause and fix.</li>
+          </ol>
+        </section>
+
+        <section className="card">
+          <h2>Submit Diagnosis</h2>
+          <label>Root cause</label>
+          <textarea value={rootCause} onChange={(e) => setRootCause(e.target.value)} placeholder="What caused the issue?" />
+          <label>Fix applied</label>
+          <textarea value={fix} onChange={(e) => setFix(e.target.value)} placeholder="What did you change?" />
+          <div className="button-row">
+            <button className="secondary" onClick={() => setMessage('Prototype reset button clicked. Backend connection comes later.')}>Reset Lab</button>
+            <button onClick={submit}>Submit</button>
+          </div>
+          <p className="status">{message}</p>
+        </section>
+      </div>
+
+      <section className="note">
+        Sprint 2 checkpoint: SSH information and UI flow are real-looking, but launch/reset/validation buttons are intentionally not connected to Docker yet.
+      </section>
+    </main>
+  )
+}
+
 export default function App() {
   const [page, setPage] = useState('dashboard')
-  return (
-    <Dashboard onOpenLab={() => setPage('lab')} />
-  )
+  return page === 'dashboard'
+    ? <Dashboard onOpenLab={() => setPage('lab')} />
+    : <Lab onBack={() => setPage('dashboard')} />
 }
